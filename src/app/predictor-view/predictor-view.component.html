@@ -1,0 +1,5 @@
+<ng-container *ngIf="predictions">
+  <div *ngFor="let prediction of predictions">
+    {{prediction.className}}: {{prediction.probability.toFixed(2)}}
+  </div>
+</ng-container>
