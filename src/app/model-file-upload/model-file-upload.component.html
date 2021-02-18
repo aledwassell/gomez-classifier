@@ -1,16 +1,25 @@
-<button (click)="file.click()" color="primary" mat-button>
-  <mat-icon>file_upload</mat-icon>
-  Select all you model JSON files (model, metadata, weights)
-</button>
-<input #file (change)="addFile($event)" accept="json/*,bin/*" hidden multiple type="file"/>
-
-<button [disabled]="!modelFiles || !allFilesAdded()" (click)="submitFiles()" color="primary" mat-button>
-  <mat-icon>model_training</mat-icon>
-  Load Model
-</button>
-
-<mat-form-field>
-  <mat-label>Model URL</mat-label>
-  <input [formControl]="urlControl" matInput placeholder="URL">
-  <mat-hint>Hint</mat-hint>
-</mat-form-field>
+<div fxLayout="column">
+  <div fxLayout fxLayoutGap="5px">
+    <button (click)="file.click()" color="primary" mat-raised-button>
+      <mat-icon>file_upload</mat-icon>
+      Select Model
+    </button>
+    <input #file (change)="addFile($event)" accept="json/*,bin/*" hidden multiple type="file"/>
+    <button [disabled]="!modelFiles || !allFilesAdded()" (click)="submitFiles()" color="primary" mat-raised-button>
+      <mat-icon>model_training</mat-icon>
+      Load Model
+    </button>
+  </div>
+</div>
+<form [formGroup]="urlControls">
+  <mat-form-field>
+    <mat-label>Model URL</mat-label>
+    <input formControlName="modelUrl" matInput placeholder="http://model.URL">
+    <mat-error *ngIf="getModelUrl.errors.invalidUrl">Must be a URL</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Metadata URL</mat-label>
+    <input formControlName="metadataUrl" matInput placeholder="http://metadata.URL">
+    <mat-error *ngIf="getMetadataUrl.errors.invalidUrl">Must be a URL</mat-error>
+  </mat-form-field>
+</form>

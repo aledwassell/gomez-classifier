@@ -1,5 +1,5 @@
 import {Component, Output, OnInit, EventEmitter} from '@angular/core';
-import {FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
+import {FormControl, AbstractControl, ValidationErrors, Validators, FormGroup } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 
 const URL_REGEX = /\b(http|https)[^\s()<>]/;
@@ -21,16 +21,29 @@ export interface ModelFiles {
 export class ModelFileUploadComponent implements OnInit {
   @Output() files = new EventEmitter<ModelFiles>();
   @Output() url = new EventEmitter<string>();
-  urlControl = new FormControl('', this.urlValidator);
+  urlControls: FormGroup;
   modelFiles: ModelFiles;
 
   ngOnInit() {
     this.modelFiles = {model: null, weights: null, metadata: null};
-    this.urlControl.valueChanges
+    this.urlControls = new FormGroup({
+      'modelUrl': new FormControl('', [Validators.required, this.urlValidator]),
+      'metadataUrl': new FormControl('', [Validators.required, this.urlValidator]),
+    })
+    this.urlControls.valueChanges
       .pipe(debounceTime(500))
       .subscribe(value => {
-        this.url.emit(value);
+        console.log(value);
+        // this.url.emit(value);
       });
+  }
+
+  get getModelUrl(): AbstractControl {
+    return this.urlControls.get('modelUrl');
+  }
+
+  get getMetadataUrl(): AbstractControl {
+    return this.urlControls.get('metadataUrl');
   }
 
   addFile(event: Event){
@@ -55,6 +68,7 @@ export class ModelFileUploadComponent implements OnInit {
   }
 
   allFilesAdded(){
+    console.log(this.getMetadataUrl);
     return Object.values(this.modelFiles).every(f => f);
   }
 }
