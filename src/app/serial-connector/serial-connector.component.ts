@@ -8,13 +8,13 @@ import { Component } from '@angular/core';
 export class SerialConnectorComponent {
   port: any;
 
-  async connect() {
+  async connect(): Promise<void> {
     this.port = await navigator['serial'].requestPort();
     await this.port.open({baudRate: 9600});
     await navigator['usb'].getDevices().then(d => console.log(d));
   }
 
-  write(){
+  write(): void{
     const encoder = new TextEncoderStream();
     const outputDone = encoder.readable.pipeTo(this.port.writable);
     const outputStream = encoder.writable;

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, ViewChild, ElementRef, AfterViewInit, Input, Output } from '@angular/core';
+import { Component, EventEmitter, ViewChild, ElementRef, AfterViewInit, Input, Output, OnDestroy } from '@angular/core';
 import { Subject, from } from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 
@@ -7,19 +7,19 @@ import {takeUntil} from 'rxjs/operators';
   template: '<video autoplay muted width="265" height="265" #video></video>',
   styleUrls: ['./webcam.component.scss']
 })
-export class WebcamComponent implements AfterViewInit {
+export class WebcamComponent implements AfterViewInit, OnDestroy {
   private destroy$ = new Subject();
   @ViewChild('video') videoElement?: ElementRef;
-  @Input() width?: number = 224;
-  @Input() height?: number = 224;
-  @Output() video = new EventEmitter<HTMLVideoElement>()
+  @Input() width? = 224;
+  @Input() height? = 224;
+  @Output() video = new EventEmitter<HTMLVideoElement>();
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
 
-  async ngAfterViewInit() {
+  async ngAfterViewInit(): Promise<void> {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       from(navigator.mediaDevices.getUserMedia({video:{width: 224, height: 224}}))
       .pipe(takeUntil(this.destroy$))
