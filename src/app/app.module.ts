@@ -9,7 +9,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
 import {AppRoutingModule} from './app-routing.module';
-import {AppComponent, IntroductionDialog} from './app.component';
+import {AppComponent} from './app.component';
 import {PredictorViewComponent} from './predictor-view/predictor-view.component';
 import {WebcamComponent} from './webcam/webcam.component';
 import {ModelFileUploadComponent} from './model-file-upload/model-file-upload.component';
@@ -41,6 +41,6 @@ import {SerialConnectorComponent} from './serial-connector/serial-connector.comp
     BrowserAnimationsModule
   ],
   providers: [],
-  bootstrap: [AppComponent, IntroductionDialog]
+  bootstrap: [AppComponent]
 })
 export class AppModule {}
