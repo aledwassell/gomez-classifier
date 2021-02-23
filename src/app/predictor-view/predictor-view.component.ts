@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import * as tmImage from '@teachablemachine/image';
 import {Subject} from 'rxjs';
-import {ModelFiles} from '../model-file-upload/model-file-upload.component';
+import {ModelFiles, ModelUrls} from '../model-file-upload/model-file-upload.component';
 
 type Drawable = HTMLImageElement | HTMLCanvasElement | HTMLVideoElement | ImageBitmap;
 
@@ -28,8 +28,8 @@ export class PredictorViewComponent {
   }
 
   // Loads the model from provided URL.
-  async loadModelFromUrl(url: string){
-    this.model = await tmImage.load(url);
+  async loadModelFromUrl(urls: ModelUrls){
+    this.model = await tmImage.load(urls.model, urls.metadata);
     this.loop();
   }
 

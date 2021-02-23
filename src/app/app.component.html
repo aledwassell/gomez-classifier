@@ -1,6 +1,8 @@
+<nav fxLayoutAlign="end">
+  <!-- <app-serial-connector></app-serial-connector> -->
+</nav>
 <app-webcam (video)="predictor.image = $event"></app-webcam>
 <app-predictor-view #predictor></app-predictor-view>
 <app-model-file-upload
   (files)="predictor.loadModelFromFile($event)"
-  (url)="predictor.loadModelFromUrl($event)"></app-model-file-upload>
-<app-serial-connector></app-serial-connector>
+  (urls)="predictor.loadModelFromUrl($event)"></app-model-file-upload>

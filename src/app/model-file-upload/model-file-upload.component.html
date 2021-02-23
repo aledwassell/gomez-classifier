@@ -1,25 +1,19 @@
-<div fxLayout="column">
-  <div fxLayout fxLayoutGap="5px">
+<div fxLayout.xs="column" fxLayoutAlign=" center" fxLayoutGap="15px">
+  <mat-form-field>
+    <mat-label>Provide a Model URL</mat-label>
+    <input [formControl]="modelUrl" matInput placeholder="http://model.URL">
+    <button *ngIf="modelUrl.invalid" (click)="modelUrl.reset()"
+            mat-button matSuffix mat-icon-button aria-label="Clear">
+      <mat-icon>close</mat-icon>
+    </button>
+    <mat-error>Must be a URL, e.g. http:// or https://</mat-error>
+  </mat-form-field>
+  <span>or</span>
+  <div>
     <button (click)="file.click()" color="primary" mat-raised-button>
       <mat-icon>file_upload</mat-icon>
-      Select Model
+      Select Model Files
     </button>
     <input #file (change)="addFile($event)" accept="json/*,bin/*" hidden multiple type="file"/>
-    <button [disabled]="!modelFiles || !allFilesAdded()" (click)="submitFiles()" color="primary" mat-raised-button>
-      <mat-icon>model_training</mat-icon>
-      Load Model
-    </button>
   </div>
 </div>
-<form [formGroup]="urlControls">
-  <mat-form-field>
-    <mat-label>Model URL</mat-label>
-    <input formControlName="modelUrl" matInput placeholder="http://model.URL">
-    <mat-error *ngIf="getModelUrl.errors.invalidUrl">Must be a URL</mat-error>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Metadata URL</mat-label>
-    <input formControlName="metadataUrl" matInput placeholder="http://metadata.URL">
-    <mat-error *ngIf="getMetadataUrl.errors.invalidUrl">Must be a URL</mat-error>
-  </mat-form-field>
-</form>

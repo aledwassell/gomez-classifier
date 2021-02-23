@@ -1,0 +1,28 @@
+:host {
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  grid-template-columns: 1fr 265px 1fr;
+  grid-template-rows: 40px 1fr 265px auto 1fr;
+  grid-template-areas:
+    "header header header"
+    ". . ."
+    ". webcam predictor"
+    "controls controls controls"
+    ". . .";
+
+  nav {
+    grid-area: header;
+  }
+  app-webcam {
+    grid-area: webcam;
+    justify-self: center;
+  }
+  app-predictor-view {
+    grid-area: predictor;
+  }
+  app-model-file-upload {
+    grid-area: controls;
+    justify-self: center;
+  }
+}
