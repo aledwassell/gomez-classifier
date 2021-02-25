@@ -30,14 +30,14 @@ export class PredictorViewComponent implements OnDestroy {
   }
 
   // Loads the model from provided file.
-  async loadModelFromFile(files: ModelFiles): Promise<void> {
-    this.model = await tmImage.loadFromFiles(files.model, files.weights, files.metadata);
+  async loadModelFromFile({model, weights, metadata}: ModelFiles): Promise<void> {
+    this.model = await tmImage.loadFromFiles(model, weights, metadata);
     this.loop();
   }
 
   // Loads the model from provided URL.
-  async loadModelFromUrl(urls: ModelUrls): Promise<void> {
-    this.model = await tmImage.load(urls.model, urls.metadata);
+  async loadModelFromUrl({model, metadata}: ModelUrls): Promise<void> {
+    this.model = await tmImage.load(model, metadata);
     this.loop();
   }
 
@@ -51,7 +51,8 @@ export class PredictorViewComponent implements OnDestroy {
     if(!this.barGraphColors.length){
       this.barGraphColors = await this.predictions.map(() => this.colorGenerator());
     }
-    if(this.predictions[this.selectedPredictionIndex] && this.predictions[this.selectedPredictionIndex].probability.toFixed(2) >= 1){
+    const {probability} = this.predictions[this.selectedPredictionIndex] ?? {};
+    if(probability && probability.toFixed(2) >= 1){
       await this.predictionEvent.emit();
     }
   }
