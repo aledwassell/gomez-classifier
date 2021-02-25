@@ -18,18 +18,13 @@ export class SerialConnectorComponent implements OnDestroy {
 
   write(): void{
     if(!this.port) return;
-    console.log('wite');
     const writer = this.outputStream.getWriter();
     writer.write(this.duration);
     writer.releaseLock();
   }
 
   async toggleConnected(){
-    if(this.port){
-      await this.disconnect();
-    } else {
-      await this.connect();
-    }
+    this.port ? await this.disconnect() : await this.connect();
   }
 
   /* Prompt connection to the USB device. */
@@ -37,9 +32,9 @@ export class SerialConnectorComponent implements OnDestroy {
     try{
       this.port = await navigator['serial'].requestPort();
       await this.port.open({baudRate: 9600});
-      const encoder = new TextEncoderStream();
-      this.outputDone = encoder.readable.pipeTo(this.port.writable);
-      this.outputStream = encoder.writable;
+      const {readable, writable} = new TextEncoderStream();
+      this.outputDone = readable.pipeTo(this.port.writable);
+      this.outputStream = writable;
     } catch (error) {
       this.port = null;
       console.error(error);
