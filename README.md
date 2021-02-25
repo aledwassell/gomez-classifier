@@ -6,12 +6,13 @@ An application built using Angular and TensorFlow.
 
 I wanted a way to distract my cat Gomez from jumping up on my kitchen counter.
 
-I thought about using an arduino and connecting an infrared motion detector and a loud buzzer, but I quickly realized the noise would become really annoying whenever someone entered the kitchen.
+I thought about using an Arduino micro controller connected to an infrared motion detector with a few lines of code to activate a piezoelectric buzzer, but I quickly realized the noise would become really annoying whenever someone entered the kitchen.
 
-So I decided to use tensorflow and train a machine learning model to recognise Gomez.
+So I decided to use tensorflow and train a machine learning model to recognise Gomez on the kitchen counter.
 
 ### Train the model
-You can train a teachable machine model on the teachable machine website https://teachablemachine.withgoogle.com/train/image
+
+You can train a teachable machine model on the teachable machine website https://teachablemachine.withgoogle.com/train/image and save the model to the cloud or download the model files and input them into the app.
 
 ## Web Serial API - Not Implemented Yet
 
@@ -20,6 +21,8 @@ In order to use the Web Serial API you will need to enable the Experimental Web 
 E.g. chrome://flags/#enable-experimental-web-platform-features
 
 ## Arduino Setup
+
+A duration in seconds can be sent over the serial buffer, this will serve as the time delay for how long you want the distraction to be active for.
 
 ```
 int duration = 0;
@@ -49,4 +52,4 @@ void loop() {
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Clone this repo and run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
