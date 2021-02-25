@@ -1,5 +1,12 @@
-<mat-list>
-  <mat-list-item *ngFor="let prediction of predictions">
+<div *ngFor="let prediction of predictions; index as i" fxLayout="column">
+  <span class="caption" fxLayout fxLayoutAlign=" center">
+    <button (click)="selectedPredictionIndex = i"
+      mat-icon-button aria-label="">
+      <mat-icon>{{this.predictions[selectedPredictionIndex] && this.predictions[selectedPredictionIndex].className === prediction.className ? 'radio_button_checked' : 'radio_button_unchecked'}}</mat-icon>
+    </button>
     {{prediction.className}}: {{prediction.probability.toFixed(2)}}
-  </mat-list-item>
-</mat-list>
+  </span>
+  <div [style.width.px]="prediction.probability.toFixed(2) * 100"
+      [style.backgroundColor]="barGraphColors[i]"
+      class="bar"></div>
+</div>

@@ -1,9 +1,14 @@
-import {Component, Input, OnDestroy} from '@angular/core';
+import { Component, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
 import * as tmImage from '@teachablemachine/image';
 import {Subject} from 'rxjs';
 import {ModelFiles, ModelUrls} from '../model-file-upload/model-file-upload.component';
 
 type Drawable = HTMLImageElement | HTMLCanvasElement | HTMLVideoElement | ImageBitmap;
+
+interface Prediction {
+  className: string;
+  probability: any|number|bigint;
+}
 
 @Component({
   selector: 'app-predictor-view',
@@ -14,7 +19,10 @@ export class PredictorViewComponent implements OnDestroy {
   private model: tmImage.CustomMobileNet = null;
   private destroy$ = new Subject();
   @Input('image') image: Drawable;
-  predictions = null;
+  @Output('predictionEvent') predictionEvent = new EventEmitter();
+  predictions: Prediction[]|null = null;
+  selectedPredictionIndex: number;
+  barGraphColors: string[] = [];
 
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -40,5 +48,15 @@ export class PredictorViewComponent implements OnDestroy {
 
   private async predict(image: Drawable): Promise<void> {
     this.predictions = await this.model.predict(image);
+    if(!this.barGraphColors.length){
+      this.barGraphColors = await this.predictions.map(() => this.colorGenerator());
+    }
+    if(this.predictions[this.selectedPredictionIndex] && this.predictions[this.selectedPredictionIndex].probability.toFixed(2) >= 1){
+      await this.predictionEvent.emit();
+    }
+  }
+
+  colorGenerator(): string {
+    return `hsl(${Math.floor(Math.random() * 360)}, 70%, 80%)`;
   }
 }
