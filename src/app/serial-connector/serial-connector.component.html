@@ -1,3 +1,13 @@
-<button (click)="connect()" mat-mini-fab color="" aria-label="Connect to serial device">
-  <mat-icon>usb_off</mat-icon>
-</button>
+<div fxLayout fxLayoutGap="5px">
+  <mat-form-field *ngIf="port" fxFlex="60px">
+    <mat-label>Duration (s)</mat-label>
+    <input matInput type="number" [(ngModel)]="duration">
+  </mat-form-field>
+  <button (click)="toggleConnected()" [disabled]="!isSerialSupported"
+    [color]="port ? 'accent' : 'warn'"
+    matTooltip="{{isSerialSupported ? 'Click to connect to serial device' : 'Serial not supported'}}"
+    mat-mini-fab aria-label="Serial device">
+    <mat-icon>{{port ? 'usb' : 'usb_off'}}</mat-icon>
+  </button>
+  <button (click)="write()">write</button>
+</div>
