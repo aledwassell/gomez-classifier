@@ -20,6 +20,8 @@ In order to use the Web Serial API you will need to enable the Experimental Web 
 
 E.g. chrome://flags/#enable-experimental-web-platform-features
 
+This feature will allow the app to connect to the Arduino via the the serial port and send data to it.
+
 ## Arduino Setup
 
 A duration in seconds can be sent over the serial buffer, this will serve as the time delay for how long you want the distraction to be active for.
