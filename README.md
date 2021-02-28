@@ -14,7 +14,7 @@ So I decided to use tensorflow and train a machine learning model to recognise G
 
 You can train a teachable machine model on the teachable machine website https://teachablemachine.withgoogle.com/train/image and save the model to the cloud or download the model files and input them into the app.
 
-## Web Serial API - Not Implemented Yet
+## Web Serial API
 
 In order to use the Web Serial API you will need to enable the Experimental Web Platform features in your Chrome Browser Flags.
 
