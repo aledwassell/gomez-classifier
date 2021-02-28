@@ -53,7 +53,6 @@ export class PredictorViewComponent implements OnDestroy {
     }
     const selectedPrediction = this.predictions[this.selectedPredictionIndex];
     if(selectedPrediction && selectedPrediction.probability.toFixed(2) >= 1){
-      console.log('emit');
       await this.predictionEvent.emit();
     }
   }
