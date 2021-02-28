@@ -7,7 +7,7 @@ import {Title} from '@angular/platform-browser';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  constructor(private titleService: Title){
+  constructor(public titleService: Title){
     titleService.setTitle('Machine Learning Webcam');
   }
 }

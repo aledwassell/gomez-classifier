@@ -51,8 +51,9 @@ export class PredictorViewComponent implements OnDestroy {
     if(!this.barGraphColors.length){
       this.barGraphColors = await this.predictions.map(() => this.colorGenerator());
     }
-    const {probability} = this.predictions[this.selectedPredictionIndex] ?? {};
-    if(probability && probability.toFixed(2) >= 1){
+    const selectedPrediction = this.predictions[this.selectedPredictionIndex];
+    if(selectedPrediction && selectedPrediction.probability.toFixed(2) >= 1){
+      console.log('emit');
       await this.predictionEvent.emit();
     }
   }

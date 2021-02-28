@@ -1,24 +1,23 @@
-import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { AppComponent } from './app.component';
+import {TestBed} from '@angular/core/testing';
+import {RouterTestingModule} from '@angular/router/testing';
+import {AppComponent} from './app.component';
+import {Title} from '@angular/platform-browser';
 
 describe('AppComponent', () => {
+  let titleService: Title;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule],
       declarations: [AppComponent],
+      providers: [{provide: Title, useClass: Title}],
     }).compileComponents();
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
+  it(`title is 'Machine Learning Webcam'`, () => {
+    titleService = TestBed.get(Title);
+    TestBed.createComponent(AppComponent);
 
-  it(`should have as title 'gomez-classifier'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('Gomez Classifier');
+    expect(titleService.getTitle()).toBe('Machine Learning Webcam');
   });
 });

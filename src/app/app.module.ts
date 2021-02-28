@@ -47,6 +47,6 @@ import {SerialConnectorComponent} from './serial-connector/serial-connector.comp
     BrowserAnimationsModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
